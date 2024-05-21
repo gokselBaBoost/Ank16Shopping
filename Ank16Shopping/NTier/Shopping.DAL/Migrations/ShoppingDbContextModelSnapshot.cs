@@ -56,7 +56,7 @@ namespace Shopping.DAL.Migrations
                         {
                             Id = 1,
                             Name = "Admin",
-                            NormalizedName = "ADMİN"
+                            NormalizedName = "ADMIN"
                         });
                 });
 
@@ -257,20 +257,21 @@ namespace Shopping.DAL.Migrations
                             Id = 1,
                             AccessFailedCount = 0,
                             BirthDate = new DateOnly(2000, 1, 1),
-                            ConcurrencyStamp = "5e96bfbd-8b36-4741-9329-cfb7b17b9e9e",
-                            Email = "Admin@mail.com",
+                            ConcurrencyStamp = "489d5be5-20d6-42e8-85bd-25f8897f6e9b",
+                            Email = "admin@mail.com",
                             EmailConfirmed = true,
                             Gender = 0,
                             LockoutEnabled = false,
-                            Name = "Admin",
-                            NormalizedEmail = "ADMİN@MAİL.COM",
-                            NormalizedUserName = "ADMİN",
-                            PasswordHash = "AQAAAAIAAYagAAAAELpfXP9zXLq53nGTzlqlR2CKTg/mJNVd1Ifjm9irvpeIOS5pV8EQgC3FOCxVa8X1yQ==",
+                            Name = "AdminName",
+                            NormalizedEmail = "ADMIN@MAIL.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAnYYc5cgn1mXwNhvlLvRgUuy2/FuKGKN6PBjk2JpFrjL1y7/KeDxUw1nynTcxcjFg==",
                             PhoneNumber = "-",
                             PhoneNumberConfirmed = true,
-                            Surname = "Admin",
+                            SecurityStamp = "2d673475-382b-4aeb-94a3-dc0b09ad461e",
+                            Surname = "AdminSurname",
                             TwoFactorEnabled = false,
-                            UserName = "Admin"
+                            UserName = "admin"
                         });
                 });
 
