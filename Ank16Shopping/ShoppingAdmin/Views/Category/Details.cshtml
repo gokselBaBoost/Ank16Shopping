@@ -1,0 +1,14 @@
+﻿@model CategoryViewModel
+
+<div class="card">
+    <h5 class="card-header">@Model.Name</h5>
+    <div class="card-body">
+        @* <h5 class="card-title">Special title treatment</h5> *@
+        <p class="card-text">@Model.Description</p>
+        <a asp-controller="Category" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-success">Düzenle</a>
+        <a asp-controller="Category" asp-action="Index" class="btn btn-primary">Geri</a>
+        <!--
+            TODO: Bu kategoriye ait ürünlerin listesi olabilir. bir düşünmek lazım
+        -->
+    </div>
+</div>

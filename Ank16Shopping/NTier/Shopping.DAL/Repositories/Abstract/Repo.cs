@@ -1,4 +1,5 @@
-﻿using Shopping.DAL.DataContext;
+﻿using Microsoft.EntityFrameworkCore;
+using Shopping.DAL.DataContext;
 using Shopping.Entities.Abstract;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Shopping.DAL.Repositories.Abstract
         protected Repo(ShoppingDbContext dbContext)
         {
             _dbContext = dbContext;
+            _dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTrackingWithIdentityResolution;
         }
 
         public int Add(TEntity entity)
@@ -32,12 +34,12 @@ namespace Shopping.DAL.Repositories.Abstract
 
         public virtual TEntity? Get(int id)
         {
-            return _dbContext.Set<TEntity>().Find(id);
+            return _dbContext.Set<TEntity>().AsNoTracking().SingleOrDefault(e => e.Id == id);
         }
 
         public virtual IEnumerable<TEntity> GetAll()
         {
-            return _dbContext.Set<TEntity>().ToList();
+            return _dbContext.Set<TEntity>().AsNoTracking().ToList();
         }
 
         public int Update(TEntity entity)

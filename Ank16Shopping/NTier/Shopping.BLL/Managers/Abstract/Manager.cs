@@ -20,6 +20,7 @@ namespace Shopping.BLL.Managers.Abstract
     {
         protected Service<TEntity, TDto> _service;
         protected IMapper _mapper;
+        protected int _appUserId;
 
         protected Manager(Service<TEntity, TDto> service)
         {
@@ -39,9 +40,15 @@ namespace Shopping.BLL.Managers.Abstract
             set { _mapper = value; }
         }
 
+        //public int AppUserId
+        //{
+        //    set { _appUserId = value; }
+        //}
+
         public int Add(TViewModel viewModel)
         {
             TDto dto = _mapper.Map<TDto>(viewModel);
+            //dto.AppUserId = _appUserId;
 
             return _service.Add(dto);
         }
@@ -51,6 +58,11 @@ namespace Shopping.BLL.Managers.Abstract
             TDto dto = _mapper.Map<TDto>(viewModel);
 
             return _service.Delete(dto);
+        }
+
+        public int Delete(int id)
+        {
+            return _service.Delete(id);
         }
 
         public TViewModel? Get(int id)

@@ -15,7 +15,7 @@ namespace Shopping.DAL.DataContext
         public ShoppingDbContext(DbContextOptions<ShoppingDbContext> options)
             :base(options)
         {
-            
+
         }
 
         public DbSet<Category> Categories { get; set; }

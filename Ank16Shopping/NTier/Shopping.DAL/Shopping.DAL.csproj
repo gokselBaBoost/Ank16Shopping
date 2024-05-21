@@ -24,9 +24,4 @@
     <ProjectReference Include="..\Shopping.Entities\Shopping.Entities.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repositories\Concrete\" />
-    <Folder Include="Services\Concrete\" />
-  </ItemGroup>
-
 </Project>
