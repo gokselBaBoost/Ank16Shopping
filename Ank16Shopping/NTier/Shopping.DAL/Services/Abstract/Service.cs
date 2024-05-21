@@ -51,6 +51,13 @@ namespace Shopping.DAL.Services.Abstract
             return _repo.Delete(entity);
         }
 
+        public int Delete(int id)
+        {
+            TDto? dto = this.Get(id);
+
+            return this.Delete(dto);
+        }
+
         public TDto? Get(int id)
         {
             TEntity? entity = _repo.Get(id);

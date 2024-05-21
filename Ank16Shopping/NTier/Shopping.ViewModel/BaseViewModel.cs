@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Shopping.ViewModel
 {
-    public class BaseViewModel
-    {
-    }
+    public abstract class  BaseViewModel
+    {}
 }

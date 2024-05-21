@@ -14,6 +14,7 @@ namespace Shopping.DAL.Services.Abstract
         int Add(TDto dto);
         int Update(TDto dto);
         int Delete(TDto dto);
+        int Delete(int id);
         IEnumerable<TDto> GetAll();
         TDto? Get(int id);
     }

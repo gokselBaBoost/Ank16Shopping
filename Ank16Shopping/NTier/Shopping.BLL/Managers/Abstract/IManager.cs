@@ -17,6 +17,7 @@ namespace Shopping.BLL.Managers.Abstract
         int Add(TViewModel viewmodel);
         int Update(TViewModel viewmodel);
         int Delete(TViewModel viewmodel);
+        int Delete(int id);
         IEnumerable<TViewModel> GetAll();
         TViewModel? Get(int id);
     }
