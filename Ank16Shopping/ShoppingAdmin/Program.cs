@@ -1,7 +1,21 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Shopping.DAL.DataContext;
+using Shopping.Entities.Concrete;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<ShoppingDbContext>(opt =>
+{
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("ShoppingDbStr"));
+});
+
+builder.Services.AddIdentityCore<AppUser>()
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<ShoppingDbContext>();
 
 var app = builder.Build();
 
