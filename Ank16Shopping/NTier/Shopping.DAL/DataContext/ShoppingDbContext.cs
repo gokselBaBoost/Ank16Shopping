@@ -26,26 +26,27 @@ namespace Shopping.DAL.DataContext
 
             //Admin User Add
 
-            string admin = "Admin";
-            string mail = admin + "@mail.com";
+            //string admin = "Admin";
+            //string mail = admin + "@mail.com";
 
             var hasher = new PasswordHasher<AppUser>();
 
             builder.Entity<AppUser>()
                    .HasData(new AppUser{
                        Id = 1,
-                       Name = admin,
-                       Surname = admin,
-                       UserName = admin,
-                       NormalizedUserName = admin.ToUpper(),
-                       Email = mail,
-                       NormalizedEmail = mail.ToUpper(),
+                       Name = "AdminName",
+                       Surname = "AdminSurname",
+                       UserName = "admin",
+                       NormalizedUserName = "ADMIN",
+                       Email = "admin@mail.com",
+                       NormalizedEmail = "ADMIN@MAIL.COM",
                        BirthDate = new DateOnly(2000,1,1),
                        Gender = Common.Gender.None,
                        EmailConfirmed = true,
                        PhoneNumberConfirmed = true,
                        PhoneNumber = "-",
-                       PasswordHash = hasher.HashPassword(null, "Az*123456")
+                       PasswordHash = hasher.HashPassword(null, "Az*123456"),
+                       SecurityStamp = Guid.NewGuid().ToString()
                    });
 
 
@@ -55,8 +56,8 @@ namespace Shopping.DAL.DataContext
                    .HasData(new IdentityRole<int>
                    {
                        Id = 1,
-                       Name = admin,
-                       NormalizedName = admin.ToUpper()
+                       Name = "Admin",
+                       NormalizedName = "ADMIN"
                    });
 
             //User To Role Add
