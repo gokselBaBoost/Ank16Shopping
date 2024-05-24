@@ -7,11 +7,16 @@ using System.Threading.Tasks;
 
 namespace Shopping.Entities.Concrete
 {
-    public class Category : BaseEntity
+    public class Product : BaseEntity
     {
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public virtual ICollection<Product> Products { get; set; }
+        public decimal Price { get; set; }
+        public short Stock { get; set; }
+        public bool IsActive { get; set; }
+
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }

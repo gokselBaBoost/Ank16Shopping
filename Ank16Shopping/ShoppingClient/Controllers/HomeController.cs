@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Shopping.ViewModel.Category;
 using ShoppingClient.Models;
 using System.Diagnostics;
 
@@ -13,9 +14,21 @@ namespace ShoppingClient.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri("https://localhost:7035/");
+
+            HttpResponseMessage responseMessage = await httpClient.GetAsync("/api/Categories");
+
+            List<CategoryViewModel> list = new List<CategoryViewModel>();
+
+            if (responseMessage != null)
+            {
+               list = responseMessage.Content.ReadFromJsonAsync<List<CategoryViewModel>>().Result;
+            }
+
+            return View(list);
         }
 
         public IActionResult Privacy()
