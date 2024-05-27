@@ -7,9 +7,9 @@ using Shopping.ViewModel.Category;
 
 namespace ShoppingApi.Controllers
 {
+    [EnableCors("MyPolicy")]
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("MyPolicy")]
     public class CategoriesController : ControllerBase
     {
         private CategoryManager _categoryManager;
@@ -28,9 +28,43 @@ namespace ShoppingApi.Controllers
             return Ok(_categoryManager.GetAll());
         }
 
+        // GET: api/<CategoriesController>
+        [HttpPost("Post")]
+        //public IEnumerable<CategoryViewModel> Get()
+        public IActionResult Post()
+        {
+            //return _categoryManager.GetAll();
+            return Ok(_categoryManager.GetAll());
+        }
+
+        // GET: api/<CategoriesController>
+        [HttpPut("Put")]
+        //public IEnumerable<CategoryViewModel> Get()
+        public IActionResult Put()
+        {
+            //return _categoryManager.GetAll();
+            return Ok(_categoryManager.GetAll());
+        }
+
+        // GET: api/<CategoriesController>
+        [HttpDelete("Delete")]
+        //public IEnumerable<CategoryViewModel> Get()
+        public IActionResult Delete()
+        {
+            //return _categoryManager.GetAll();
+            return Ok(_categoryManager.GetAll());
+        }
+
         // GET api/<CategoriesController>/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
+        {
+            return Ok(_categoryManager.Get(id));
+        }
+
+        // GET api/<CategoriesController>/5/Products
+        [HttpGet("{id}/Products")]
+        public IActionResult GetProducts(int id)
         {
             return Ok(_categoryManager.Get(id));
         }
@@ -39,6 +73,7 @@ namespace ShoppingApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CategoryViewModel model)
         {
+            Thread.Sleep(10000);
             _categoryManager.Add(model);
             return Created("", model);
         }

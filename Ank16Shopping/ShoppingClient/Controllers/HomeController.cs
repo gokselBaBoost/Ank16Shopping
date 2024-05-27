@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using Shopping.ViewModel.Category;
 using ShoppingClient.Models;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
 
 namespace ShoppingClient.Controllers
 {
@@ -17,7 +20,7 @@ namespace ShoppingClient.Controllers
         public async Task<IActionResult> Index()
         {
             HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("https://localhost:7035/");
+            httpClient.BaseAddress = new Uri("https://localhost:7035/"); //Api url
 
             HttpResponseMessage responseMessage = await httpClient.GetAsync("/api/Categories");
 
@@ -28,7 +31,88 @@ namespace ShoppingClient.Controllers
                list = responseMessage.Content.ReadFromJsonAsync<List<CategoryViewModel>>().Result;
             }
 
+            if (TempData.ContainsKey("RecordStatus"))
+            {
+                ViewBag.RecordStatus = TempData["RecordStatus"];
+                ViewData["RecordMessage"] = TempData["RecordMessage"];
+            }
+
             return View(list);
+        }
+
+        public IActionResult Create()
+        {
+            CategoryViewModel model = new CategoryViewModel();
+
+            return View();
+        }
+
+        //[HttpPost]
+        //public IActionResult Create(CategoryViewModel model)
+        //{
+        //    HttpClient httpClient = new HttpClient();
+        //    httpClient.BaseAddress = new Uri("https://localhost:7035/"); //Api url
+
+        //    model.AppUserId = 1;//Login olmuþ kullanýcýnýn User bilgisinde alacaðýz
+
+        //    string modelJson = JsonSerializer.Serialize(model);
+
+        //    StringContent content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+
+        //    httpClient.PostAsync("/api/Categories", content);
+
+        //    //if (responseMessage != null && responseMessage.StatusCode == System.Net.HttpStatusCode.Created)
+        //    //{
+        //    //    // Burada kayýt yapýldý ve gerekli aksiyon sonrasý bir yere yönlendirme yapýlabilri.
+
+        //    //    TempData["RecordMessage"] = "Kayýt yapýlmýþtýr.";
+        //    //    TempData["RecordStatus"] = true;
+
+        //    //    return RedirectToAction(nameof(Index));
+        //    //}
+
+
+        //    //ViewData["RecordMessage"] = "Kayýt yapýlamamýþtýr.";
+        //    //ViewData["RecordStatus"] = false;
+
+        //    //return View(model);
+
+        //    TempData["RecordMessage"] = "Kayýt isteðiniz gönderilmiþtir.";
+        //    TempData["RecordStatus"] = true;
+
+        //    return RedirectToAction(nameof(Index));
+        //}
+
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CategoryViewModel model)
+        {
+            HttpClient httpClient = new HttpClient();
+            httpClient.BaseAddress = new Uri("https://localhost:7035/"); //Api url
+
+            model.AppUserId = 1;//Login olmuþ kullanýcýnýn User bilgisinde alacaðýz
+
+            string modelJson = JsonSerializer.Serialize(model);
+
+            StringContent content = new StringContent(modelJson, Encoding.UTF8, "application/json");
+
+            HttpResponseMessage responseMessage = await httpClient.PostAsync("/api/Categories", content);
+
+            if (responseMessage != null && responseMessage.StatusCode == System.Net.HttpStatusCode.Created)
+            {
+                // Burada kayýt yapýldý ve gerekli aksiyon sonrasý bir yere yönlendirme yapýlabilri.
+
+                TempData["RecordMessage"] = "Kayýt yapýlmýþtýr.";
+                TempData["RecordStatus"] = true;
+
+                return RedirectToAction(nameof(Index));
+            }
+
+
+            ViewData["RecordMessage"] = "Kayýt yapýlamamýþtýr.";
+            ViewData["RecordStatus"] = false;
+
+            return View(model);
         }
 
         public IActionResult Privacy()

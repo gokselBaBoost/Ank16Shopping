@@ -10,17 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddCors(opt =>
-{
-    opt.AddPolicy("MyPolicy", policy =>
-    {
-        policy.WithOrigins("https://localhost:7021")
-              .WithMethods("GET", "POST", "PUT", "DELETE")
-              .AllowAnyHeader()
-              .Build();
-    });
-});
-
 builder.Services.AddDbContext<ShoppingDbContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("ShoppingDbStr"));
@@ -38,6 +27,18 @@ builder.Services.AddScoped<ProductRepo>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<ProductManager>();
 
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("MyPolicy", policy =>
+    {
+        policy.WithOrigins("https://localhost:7021")
+              .WithMethods("GET")
+              .AllowAnyHeader()
+              .Build();
+               
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -47,16 +48,30 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
+
 //app.UseCors(opt =>
 //{
-//    opt.WithOrigins("https://localhost:7021")
-//       .WithMethods("POST")
-//       .Build();
+//    //opt.AllowAnyOrigin() // * tüm siteler
+//    //   .AllowAnyHeader() // * tüm header istekleri
+//    //   .AllowAnyMethod() // * tüm metotlar (GET,POST,PUT,DELETE)
+//    //   .Build();
+
+//    // https://localhost:7021
+
+//    /*
+//     * .SetIsOriginAllowed(orgin => new Uri(orgin).Host == "localhost")
+//       .SetIsOriginAllowed(orgin => new Uri(orgin).Scheme == "https")
+//       .SetIsOriginAllowed(orgin => new Uri(orgin).Port == 7021)
+//     */
+
+//    //opt.WithOrigins("https://localhost:7021", "https://localhost:7022")
+//    //   .AllowAnyHeader()
+//    //   .AllowAnyMethod()
+//    //   .Build();
 //});
 
 app.UseCors("MyPolicy");
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
