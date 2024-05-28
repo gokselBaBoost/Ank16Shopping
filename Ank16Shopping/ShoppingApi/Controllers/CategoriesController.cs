@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Shopping.BLL.Managers.Concrete;
 using Shopping.ViewModel.Category;
+using System.Net;
+using System.Text;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -73,9 +75,43 @@ namespace ShoppingApi.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] CategoryViewModel model)
         {
-            Thread.Sleep(10000);
-            _categoryManager.Add(model);
-            return Created("", model);
+            //if(HttpContext.Request.Headers.ContainsKey("userName") && 
+            //    HttpContext.Request.Headers.ContainsKey("password"))
+            //{
+            //    string username = HttpContext.Request.Headers["userName"];
+            //    string password = HttpContext.Request.Headers["password"];
+
+            //    if(username == "admin" && password == "1234567")
+            //    {
+            //        Thread.Sleep(2000);
+            //        _categoryManager.Add(model);
+            //        return Created("", model);
+            //    }
+            //    else
+            //    {
+            //        return BadRequest("Kullanıcı adı veya şifre yanlış");
+            //    }
+            //}
+
+            if (HttpContext.Request.Headers.ContainsKey("yetkiKodu"))
+            {
+                string token = HttpContext.Request.Headers["yetkiKodu"];
+
+                var userInfo = Encoding.UTF8.GetString(Convert.FromBase64String(token)).Split("@");
+
+                if (userInfo[0] == "admin" && userInfo[1] == "1234567")
+                {
+                    Thread.Sleep(2000);
+                    _categoryManager.Add(model);
+                    return Created("", model);
+                }
+                else
+                {
+                    return BadRequest("Kullanıcı adı veya şifre yanlış");
+                }
+            }
+
+            return Unauthorized("Yetkisiz giriş");
         }
 
         // PUT api/<CategoriesController>/5

@@ -41,6 +41,10 @@
 <button class="btn btn-info" onclick="PutCategories()">PUT Categories</button>
 <button class="btn btn-danger" onclick="DeleteCategories()">DELETE Categories</button>
 
+<hr />
+
+@await Html.PartialAsync("_Create", new CategoryViewModel())
+
 @section Scripts{
     <script type="text/javascript" src="~/js/index.js"></script>
 }

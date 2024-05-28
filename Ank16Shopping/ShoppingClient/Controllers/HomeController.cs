@@ -44,7 +44,7 @@ namespace ShoppingClient.Controllers
         {
             CategoryViewModel model = new CategoryViewModel();
 
-            return View();
+            return View(model);
         }
 
         //[HttpPost]
