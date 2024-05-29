@@ -47,7 +47,8 @@ namespace Shopping.DAL.DataContext
                        PhoneNumberConfirmed = true,
                        PhoneNumber = "-",
                        PasswordHash = hasher.HashPassword(null, "Az*123456"),
-                       SecurityStamp = Guid.NewGuid().ToString()
+                       SecurityStamp = Guid.NewGuid().ToString(),
+                       UserType = Common.UserType.Manager
                    });
 
 

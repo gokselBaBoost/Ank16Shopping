@@ -239,6 +239,9 @@ namespace Shopping.DAL.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<int>("UserType")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -257,7 +260,7 @@ namespace Shopping.DAL.Migrations
                             Id = 1,
                             AccessFailedCount = 0,
                             BirthDate = new DateOnly(2000, 1, 1),
-                            ConcurrencyStamp = "27873f88-69f0-4321-b7f9-be69b546066c",
+                            ConcurrencyStamp = "4a25955c-221b-42e9-8b3f-f9df98588ac4",
                             Email = "admin@mail.com",
                             EmailConfirmed = true,
                             Gender = 0,
@@ -265,13 +268,14 @@ namespace Shopping.DAL.Migrations
                             Name = "AdminName",
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGsWEhd8EEBFrFdK7/Kcjv7goT8FraRyq5IrnvuJ2WW1MNsVw7aHHCf4qWaOkhjNKg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBb30ZyY480ORlUhgrz1GwmTlhq+DbdH82RV/k7yEIbTSid4Vmy/vKgoTDQ8oaCznQ==",
                             PhoneNumber = "-",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "f7e2008e-50f9-475f-9699-82adb0a0a06e",
+                            SecurityStamp = "0216c7e5-8839-4d94-bfda-b3856e5ff321",
                             Surname = "AdminSurname",
                             TwoFactorEnabled = false,
-                            UserName = "admin"
+                            UserName = "admin",
+                            UserType = 2
                         });
                 });
 

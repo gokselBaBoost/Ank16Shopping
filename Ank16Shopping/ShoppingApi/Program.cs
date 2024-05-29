@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shopping.BLL.Managers.Concrete;
 using Shopping.DAL.DataContext;
 using Shopping.DAL.Repositories.Concrete;
 using Shopping.DAL.Services.Concrete;
+using Shopping.Entities.Concrete;
+using Shopping.Services.Mail;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +18,24 @@ builder.Services.AddDbContext<ShoppingDbContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("ShoppingDbStr"));
 }, ServiceLifetime.Scoped);
 
+builder.Services.AddIdentity<AppUser, IdentityRole<int>>(
+    opt =>
+    {
+        opt.SignIn.RequireConfirmedEmail = true;
+
+        opt.User.RequireUniqueEmail = true;
+
+        opt.Password.RequireDigit = true;
+        opt.Password.RequireLowercase = true;
+        opt.Password.RequireUppercase = true;
+        opt.Password.RequireNonAlphanumeric = true;
+        opt.Password.RequiredUniqueChars = 1;
+        opt.Password.RequiredLength = 8;
+    }
+                )
+                .AddDefaultTokenProviders()
+                .AddEntityFrameworkStores<ShoppingDbContext>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -26,6 +47,8 @@ builder.Services.AddScoped<CategoryManager>();
 builder.Services.AddScoped<ProductRepo>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<ProductManager>();
+
+builder.Services.AddScoped<IMailService, GmailService>();
 
 builder.Services.AddCors(opt =>
 {

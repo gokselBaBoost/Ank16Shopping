@@ -17,27 +17,32 @@ namespace ShoppingClient.Controllers
             _logger = logger;
         }
 
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    HttpClient httpClient = new HttpClient();
+        //    httpClient.BaseAddress = new Uri("https://localhost:7035/"); //Api url
+
+        //    HttpResponseMessage responseMessage = await httpClient.GetAsync("/api/Categories");
+
+        //    List<CategoryViewModel> list = new List<CategoryViewModel>();
+
+        //    if (responseMessage != null)
+        //    {
+        //       list = responseMessage.Content.ReadFromJsonAsync<List<CategoryViewModel>>().Result;
+        //    }
+
+        //    if (TempData.ContainsKey("RecordStatus"))
+        //    {
+        //        ViewBag.RecordStatus = TempData["RecordStatus"];
+        //        ViewData["RecordMessage"] = TempData["RecordMessage"];
+        //    }
+
+        //    return View(list);
+        //}
+
+        public IActionResult Index()
         {
-            HttpClient httpClient = new HttpClient();
-            httpClient.BaseAddress = new Uri("https://localhost:7035/"); //Api url
-
-            HttpResponseMessage responseMessage = await httpClient.GetAsync("/api/Categories");
-
-            List<CategoryViewModel> list = new List<CategoryViewModel>();
-
-            if (responseMessage != null)
-            {
-               list = responseMessage.Content.ReadFromJsonAsync<List<CategoryViewModel>>().Result;
-            }
-
-            if (TempData.ContainsKey("RecordStatus"))
-            {
-                ViewBag.RecordStatus = TempData["RecordStatus"];
-                ViewData["RecordMessage"] = TempData["RecordMessage"];
-            }
-
-            return View(list);
+            return View();
         }
 
         public IActionResult Create()

@@ -16,5 +16,6 @@ namespace Shopping.DTO
         public bool IsActive { get; set; }
 
         public int CategoryId { get; set; }
+        public CategoryDto Category { get; set; }
     }
 }
