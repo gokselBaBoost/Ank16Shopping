@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Shopping.BLL.Managers.Concrete;
 using Shopping.Entities.Concrete;
@@ -22,9 +23,8 @@ namespace ShoppingApi.Filters
             //Authorization için kontrol
             if (!context.HttpContext.Request.Headers.ContainsKey("Authorization"))
             {
-                context.HttpContext.Response.StatusCode = 401;
-                context.HttpContext.Response.WriteAsync("Yetkisiz giriş");
-                return;
+                context.Result = new UnauthorizedObjectResult("Yetkisiz Giriş");
+				return;
             }
                
 
@@ -44,18 +44,17 @@ namespace ShoppingApi.Filters
 
             if (appUser == null)
             {
-                context.HttpContext.Response.StatusCode = 404;
-                context.HttpContext.Response.WriteAsync("Kullanıcı adı veya şifre yanlıştır.");
-                return;
+				context.Result = new NotFoundObjectResult("Kullanıcı adı veya şifre yanlıştır");
+				return;
             }
 
             Microsoft.AspNetCore.Identity.SignInResult result = _signInManager.PasswordSignInAsync(appUser, password, false, true).Result;
 
             if (result.IsNotAllowed)
             {
-                context.HttpContext.Response.StatusCode = 460;
-                context.HttpContext.Response.WriteAsync("Email adresiniz doğrulanmamıştır. Lütfen doğrulayınız");
-                return;
+				context.Result = new StatusCodeResult(460);
+				context.HttpContext.Response.WriteAsync("Email adresiniz doğrulanmamıştır. Lütfen doğrulayınız");
+				return;
             }
 
             TimeSpan lockOutEnd = _signInManager.Options.Lockout.DefaultLockoutTimeSpan;
@@ -64,23 +63,22 @@ namespace ShoppingApi.Filters
 
             if (result.IsLockedOut)
             {
-                context.HttpContext.Response.StatusCode = 460;
-                context.HttpContext.Response.WriteAsync($"Hesabınız kilitlenmiştir. {lockOutEnd.Minutes} dakika sonra giriniz.{DateTime.Now.AddMinutes(lockOutEnd.Minutes)}");
-                return;
+				context.Result = new StatusCodeResult(460);
+				context.HttpContext.Response.WriteAsync($"Hesabınız kilitlenmiştir. {lockOutEnd.Minutes} dakika sonra giriniz.{DateTime.Now.AddMinutes(lockOutEnd.Minutes)}");
+				return;
             }
 
             if (result.RequiresTwoFactor)
             {
-                context.HttpContext.Response.StatusCode = 250;
+				context.Result = new StatusCodeResult(250);
                 context.HttpContext.Response.WriteAsync("İkili doğrulama linki : https://localhost/Auth/TwoFactAuth");
                 return;
             }
 
             if (!result.Succeeded)
             {
-                context.HttpContext.Response.StatusCode = 404;
-                context.HttpContext.Response.WriteAsync("Kullanıcı adı veya şifre yanlıştır.");
-                return;
+				context.Result = new NotFoundObjectResult("Kullanıcı adı veya şifre yanlıştır.");
+				return;
             }
 
             base.OnActionExecuting(context);

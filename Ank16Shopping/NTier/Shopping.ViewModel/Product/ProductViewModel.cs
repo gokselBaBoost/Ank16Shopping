@@ -17,9 +17,9 @@ namespace Shopping.ViewModel.Product
         public bool IsActive { get; set; }
 
         public string PictureName { get; set; }
-        public string PictureFile { get; set; }
+        public byte[] PictureFile { get; set; }
 
-        public string FormFile { get; set; }
+        public IFormFile FormFile { get; set; }
 
         public int CategoryId { get; set; }
     }
