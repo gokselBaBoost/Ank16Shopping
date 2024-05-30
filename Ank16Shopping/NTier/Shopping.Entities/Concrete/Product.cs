@@ -15,6 +15,8 @@ namespace Shopping.Entities.Concrete
         public decimal Price { get; set; }
         public short Stock { get; set; }
         public bool IsActive { get; set; }
+        public string PictureName { get; set; }
+        public byte[] PictureFile { get; set; }
 
         public int CategoryId { get; set; }
         public Category Category { get; set; }

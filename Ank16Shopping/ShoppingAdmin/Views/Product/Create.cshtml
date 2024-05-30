@@ -6,7 +6,7 @@
                 <h1>Kategori Ekle</h1>
             </div>
             <div class="card-body">
-                <form asp-action="Create">
+                <form asp-action="Create" enctype="multipart/form-data">
                     <div asp-validation-summary="All"></div>
                     <div class="row mb-3">
                         <label asp-for="Name" class="col-sm-2 col-form-label">@Html.DisplayNameFor(m => m.Name)</label>
@@ -55,6 +55,14 @@
 
                             </select>
                             <span asp-validation-for="CategoryId" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label asp-for="FormFile" class="col-sm-2 col-form-label">@Html.DisplayNameFor(m => m.FormFile)</label>
+                        <div class="col-sm-10">
+                            <input asp-for="FormFile" class="form-control form-check" placeholder="@Html.DisplayNameFor(m => m.FormFile)" />
+                            <span asp-validation-for="FormFile" class="form-text text-danger"></span>
                         </div>
                     </div>
 

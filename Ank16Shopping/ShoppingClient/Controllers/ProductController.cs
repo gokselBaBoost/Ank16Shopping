@@ -8,6 +8,8 @@ namespace ShoppingClient.Controllers
     {
         public IActionResult Index()
         {
+            var user = HttpContext.User;
+
             return View();
         }
     }

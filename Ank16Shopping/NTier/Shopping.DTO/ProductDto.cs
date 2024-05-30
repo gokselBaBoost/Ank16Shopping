@@ -15,6 +15,9 @@ namespace Shopping.DTO
         public short Stock { get; set; }
         public bool IsActive { get; set; }
 
+        public string PictureName { get; set; }
+        public byte[] PictureFile { get; set; }
+
         public int CategoryId { get; set; }
         public CategoryDto Category { get; set; }
     }

@@ -17,6 +17,7 @@
                             <tr>
                                 <th>Adı</th>
                                 <th>Açıklaması</th>
+                                <th>Ürün Resmi</th>
                                 <th>İşlem</th>
                             </tr>
                         </thead>
@@ -26,6 +27,18 @@
                                 <tr>
                                     <td>@item.Name</td>
                                     <td>@item.Description</td>
+                                    <td>
+                                        @* @{
+                                            var base64tostring = Convert.ToBase64String(item.PictureFile, 0, item.PictureFile.Length);
+                                            var Imagesrc = string.Format("data:Image/*;base64," + base64tostring);
+                                        }
+
+                                        <img src="@Imagesrc" class="img-thumbnail" alt="@item.PictureName" /> 
+                                        Bu yukarıdaki image data formatı ile güvenli olacak şekilde ayarlandı.
+                                        Aşağıdaki src folder yolu admin panelde kullanılması daha uygun güvenlik için
+                                        *@
+                                        <img src="~/images/products/@item.PictureName" class="img-thumbnail" alt="@item.PictureName" />
+                                    </td>
                                     <td>
                                         <a class="btn btn-info" asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id">Düzenle</a>
                                         <a class="btn btn-secondary" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">Detay</a>
@@ -62,6 +75,7 @@
                             <tr>
                                 <th>Adı</th>
                                 <th>Açıklaması</th>
+                                <th>Ürün Resmi</th>
                                 <th>İşlem</th>
                             </tr>
                         </tfoot>

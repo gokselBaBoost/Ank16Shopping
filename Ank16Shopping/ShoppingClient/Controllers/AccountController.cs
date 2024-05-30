@@ -5,6 +5,7 @@ using Shopping.ViewModel;
 using Shopping.ViewModel.Category;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace ShoppingClient.Controllers
 {
@@ -47,13 +48,12 @@ namespace ShoppingClient.Controllers
                 }
 
 
-                ClaimsIdentity claimsIdentity = new ClaimsIdentity();
-                claimsIdentity.AddClaims(claims);
+                ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims,CookieAuthenticationDefaults.AuthenticationScheme);
 
                 ClaimsPrincipal principal = new ClaimsPrincipal(claimsIdentity);
 
 
-                HttpContext.SignInAsync(principal);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
                 return RedirectToAction("Index","Home");
             }
