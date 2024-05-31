@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Shopping.BLL.Managers.Concrete;
 using Shopping.Entities.Concrete;
 using Shopping.ViewModel.Product;
 using ShoppingApi.Filters;
+using System.Security.Claims;
 using System.Text;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -43,12 +45,51 @@ namespace ShoppingApi.Controllers
             return "value";
         }
 
+        // GET api/<ProductsController>/5
+        [HttpGet("{id}/Picture")]
+        public byte[] GetPicture(int id)
+        {
+            return _productManager.Get(id).PictureFile;
+        }
+
         // POST api/<ProductsController>
         [HttpPost]
-        public IActionResult Post([FromBody] ProductViewModel model)
+        public IActionResult Post([FromForm] ProductViewModel model)
         {
             _productManager.Add(model);
+            return Created("", model);
+        }
 
+        [HttpPost("FormDataWithJson")]
+        public IActionResult FormDataWithJson(IFormFile FormFile, [FromForm] string jsonData)
+        {
+
+            //ProductViewModel vm1 = System.Text.Json.JsonSerializer.Deserialize<ProductViewModel>(jsonData);
+            ProductViewModel? model = JsonConvert.DeserializeObject<ProductViewModel>(jsonData);
+
+            //model.AppUserId = Convert.ToInt32(HttpContext.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value);
+
+            string fileName = FormFile.FileName;
+
+            var dosyadakiFileName = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/products", fileName);
+
+            var konum = dosyadakiFileName;
+
+            //Kaydetmek için bir akış ortamı oluşturalım
+            var akisOrtami = new FileStream(konum, FileMode.Create);
+            var memory = new MemoryStream();
+
+            //Resmi kaydet
+            FormFile.CopyTo(akisOrtami);
+            FormFile.CopyTo(memory);
+
+            model.PictureName = fileName;
+            model.PictureFile = memory.ToArray();
+
+            akisOrtami.Dispose();
+            memory.Dispose();
+
+            _productManager.Add(model);
             return Created("", model);
         }
 

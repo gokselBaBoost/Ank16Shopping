@@ -1,0 +1,43 @@
+﻿<button class="btn btn-success" onclick="GetCategories()">Kategoriler</button>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Adı</th>
+            <th>Açıklama</th>
+        </tr>
+    </thead>
+    <tbody id="categories">
+
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>#</th>
+            <th>Adı</th>
+            <th>Açıklama</th>
+        </tr>
+    </tfoot>
+</table>
+
+@section Scripts{
+    <script type="text/javascript">
+        function GetCategories(){
+            $.ajax({
+                url: "https://localhost:7035/api/Categories",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", `@ViewBag.BasicAuth`)
+                },
+                success: function (data) {
+                    data.forEach((item, index, arr) => {
+                        console.log(item.name);
+                        var trTd = `<tr><td>${item.id}</td><td>${item.name}</td><td>${item.description}</td></tr>`
+                        $("#categories").append(trTd);
+                    });
+                },
+                error: function (xhr) {
+                    console.log(xhr);
+                }
+            })
+        }
+    </script>
+}

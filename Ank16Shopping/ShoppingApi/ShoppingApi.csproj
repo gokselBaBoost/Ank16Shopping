@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.6" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
@@ -15,6 +16,10 @@
     <ProjectReference Include="..\NTier\Shopping.BLL\Shopping.BLL.csproj" />
     <ProjectReference Include="..\NTier\Shopping.Services\Shopping.Services.csproj" />
     <ProjectReference Include="..\NTier\Shopping.ViewModel\Shopping.ViewModel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\products\" />
   </ItemGroup>
 
 </Project>

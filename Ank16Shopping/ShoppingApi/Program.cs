@@ -54,7 +54,7 @@ builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("MyPolicy", policy =>
     {
-        policy.WithOrigins("https://localhost:7021")
+        policy.WithOrigins("https://localhost:7021", "https://localhost:7174")
               .WithMethods("GET")
               .AllowAnyHeader()
               .Build();
@@ -72,7 +72,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseStaticFiles();
 //app.UseCors(opt =>
 //{
 //    //opt.AllowAnyOrigin() // * tüm siteler

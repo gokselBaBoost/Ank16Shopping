@@ -42,6 +42,15 @@ namespace ShoppingClient.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.BasicAuth = HttpContext.Session.GetString("BasicAuth");
+
+            return View();
+        }
+
+        public IActionResult Categories()
+        {
+            ViewBag.BasicAuth = HttpContext.Session.GetString("BasicAuth");
+
             return View();
         }
 

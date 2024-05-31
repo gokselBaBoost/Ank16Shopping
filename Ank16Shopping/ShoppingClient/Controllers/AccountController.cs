@@ -6,6 +6,7 @@ using Shopping.ViewModel.Category;
 using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace ShoppingClient.Controllers
 {
@@ -37,11 +38,11 @@ namespace ShoppingClient.Controllers
             {
                 // Burada kayıt yapıldı ve gerekli aksiyon sonrası bir yere yönlendirme yapılabilri.
 
-                List<UserClaimViewModel>  userClaimViewModel = responseMessage.Content.ReadFromJsonAsync<List<UserClaimViewModel>>().Result;
+                SignInResponseViewModel  responseViewModel = responseMessage.Content.ReadFromJsonAsync<SignInResponseViewModel>().Result;
 
                 List<Claim> claims = new List<Claim>();
 
-                foreach(UserClaimViewModel item in userClaimViewModel)
+                foreach(UserClaimViewModel item in responseViewModel.Claims)
                 {
                     Claim claim = new Claim(item.Type, item.Value);
                     claims.Add(claim);
@@ -54,6 +55,8 @@ namespace ShoppingClient.Controllers
 
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                HttpContext.Session.SetString("BasicAuth", responseViewModel.BasicAuth);
 
                 return RedirectToAction("Index","Home");
             }

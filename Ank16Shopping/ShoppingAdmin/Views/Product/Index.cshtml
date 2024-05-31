@@ -38,6 +38,8 @@
                                         Aşağıdaki src folder yolu admin panelde kullanılması daha uygun güvenlik için
                                         *@
                                         <img src="~/images/products/@item.PictureName" class="img-thumbnail" alt="@item.PictureName" />
+                                        <hr />
+                                        <img id="product-img-@item.Id" class="img-thumbnail" alt="@item.PictureName" />
                                     </td>
                                     <td>
                                         <a class="btn btn-info" asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id">Düzenle</a>

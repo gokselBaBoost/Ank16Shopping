@@ -16,8 +16,8 @@ namespace Shopping.ViewModel.Product
         public short Stock { get; set; }
         public bool IsActive { get; set; }
 
-        public string PictureName { get; set; }
-        public byte[] PictureFile { get; set; }
+        public string? PictureName { get; set; }
+        public byte[]? PictureFile { get; set; }
 
         public IFormFile FormFile { get; set; }
 

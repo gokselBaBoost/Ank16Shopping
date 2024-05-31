@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Shopping.BLL.Managers.Concrete;
 using Shopping.ViewModel.Category;
+using ShoppingApi.Filters;
 using System.Net;
 using System.Text;
 
@@ -12,6 +13,7 @@ namespace ShoppingApi.Controllers
     [EnableCors("MyPolicy")]
     [Route("api/[controller]")]
     [ApiController]
+    [AuthActionFilter]
     public class CategoriesController : ControllerBase
     {
         private CategoryManager _categoryManager;

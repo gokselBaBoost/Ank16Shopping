@@ -5,6 +5,7 @@ using Shopping.Entities.Concrete;
 using Shopping.Services.Mail;
 using Shopping.ViewModel;
 using System.Security.Claims;
+using System.Text;
 
 namespace ShoppingApi.Controllers
 {
@@ -63,6 +64,8 @@ namespace ShoppingApi.Controllers
         [HttpPost("SignIn")]
         public IActionResult SignIn(SignInViewModel model)
         {
+
+
             AppUser? user = _userManager.FindByEmailAsync(model.Email).Result;
 
             if (user == null) return NotFound("Kullanıcı adı veya şifre yanlıştır.");
@@ -80,8 +83,12 @@ namespace ShoppingApi.Controllers
                 {
                     userClaimViewModel.Add(new() { Type =  claim.Type, Value = claim.Value });
                 }
-                
-                return Ok(userClaimViewModel);
+
+                SignInResponseViewModel response = new SignInResponseViewModel();
+                response.Claims = userClaimViewModel;
+                response.BasicAuth = BasicAuthGenerate(model.Email, model.Password);
+
+                return Ok(response);
             }
 
             if (result.IsNotAllowed)
@@ -96,6 +103,16 @@ namespace ShoppingApi.Controllers
 
 
             return NotFound("Kullanıcı adı veya şifre yanlıştır.");
+        }
+
+        [NonAction]
+        private string BasicAuthGenerate(string email, string password)
+        {
+            string userInfo = email + ":" + password;
+
+            string result = Convert.ToBase64String(Encoding.UTF8.GetBytes(userInfo)); ;
+
+            return "Basic " + result;
         }
     }
 }
