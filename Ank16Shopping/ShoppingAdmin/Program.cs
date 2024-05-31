@@ -45,6 +45,10 @@ builder.Services.AddScoped<CategoryRepo>();
 builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<CategoryManager>();
 
+builder.Services.AddScoped<ProductRepo>();
+builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<ProductManager>();
+
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();

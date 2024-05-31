@@ -1,0 +1,97 @@
+﻿@model IEnumerable<ProductViewModel>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Ürünler</h3>
+                        <a class="btn btn-success" style="position:relative; display:inline; left:90%" asp-controller="Product" asp-action="Create">Yeni</a>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Adı</th>
+                                <th>Açıklaması</th>
+                                <th>Ürün Resmi</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </thead>
+                        <tbody id="category-list">
+                            @foreach (ProductViewModel item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.Description</td>
+                                    <td>
+                                        @* @{
+                                            var base64tostring = Convert.ToBase64String(item.PictureFile, 0, item.PictureFile.Length);
+                                            var Imagesrc = string.Format("data:Image/*;base64," + base64tostring);
+                                        }
+
+                                        <img src="@Imagesrc" class="img-thumbnail" alt="@item.PictureName" /> 
+                                        Bu yukarıdaki image data formatı ile güvenli olacak şekilde ayarlandı.
+                                        Aşağıdaki src folder yolu admin panelde kullanılması daha uygun güvenlik için
+                                        *@
+                                        <img src="~/images/products/@item.PictureName" class="img-thumbnail" alt="@item.PictureName" />
+                                        <hr />
+                                        <img id="product-img-@item.Id" class="img-thumbnail" alt="@item.PictureName" />
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-info" asp-controller="Product" asp-action="Edit" asp-route-id="@item.Id">Düzenle</a>
+                                        <a class="btn btn-secondary" asp-controller="Product" asp-action="Details" asp-route-id="@item.Id">Detay</a>
+                                        <a class="btn btn-danger"
+                                           id="remove-link-@item.Id"
+                                           data-url="@Url.ActionLink("Delete", "Product", new { id = item.Id })"
+                                           data-bs-toggle="modal"
+                                           data-bs-target="#removeConfirm-@item.Id">Sil</a>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="removeConfirm-@item.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p><strong>@item.Name</strong> ürününü silmek istediğinizden emin misiniz?</p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Geri</button>
+                                                        <button type="button" class="btn btn-danger" onclick="DeleteItem(@item.Id)">Evet</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Adı</th>
+                                <th>Açıklaması</th>
+                                <th>Ürün Resmi</th>
+                                <th>İşlem</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!-- /.card -->
+
+            </div>
+            <!--/.col (left) -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/Product/index.js"></script>
+}

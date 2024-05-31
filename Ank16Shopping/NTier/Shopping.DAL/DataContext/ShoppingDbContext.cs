@@ -19,6 +19,7 @@ namespace Shopping.DAL.DataContext
         }
 
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -46,7 +47,8 @@ namespace Shopping.DAL.DataContext
                        PhoneNumberConfirmed = true,
                        PhoneNumber = "-",
                        PasswordHash = hasher.HashPassword(null, "Az*123456"),
-                       SecurityStamp = Guid.NewGuid().ToString()
+                       SecurityStamp = Guid.NewGuid().ToString(),
+                       UserType = Common.UserType.Manager
                    });
 
 

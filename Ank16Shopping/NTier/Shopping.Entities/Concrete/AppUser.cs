@@ -14,5 +14,6 @@ namespace Shopping.Entities.Concrete
         public string Surname { get; set; }
         public DateOnly BirthDate { get; set; }
         public Gender Gender { get; set; }
+        public UserType UserType { get; set; } = UserType.User;
     }
 }

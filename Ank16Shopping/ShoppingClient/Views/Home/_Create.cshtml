@@ -1,0 +1,40 @@
+﻿@model CategoryViewModel
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <h1>Kategori Ekle</h1>
+            </div>
+            @if (ViewBag.RecordStatus is not null && ViewBag.RecordStatus == false)
+            {
+                <div class="bg-danger">@ViewData["RecordMessage"]</div>
+            }
+            <div class="card-body">
+                <div asp-validation-summary="All"></div>
+                <div class="row mb-3">
+                    <label asp-for="Name" class="col-sm-2 col-form-label">@Html.DisplayNameFor(m => m.Name)</label>
+                    <div class="col-sm-10">
+                        <input asp-for="Name" class="form-control" placeholder="@Html.DisplayNameFor(m => m.Name)" />
+                        <span asp-validation-for="Name" class="form-text text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label asp-for="Description" class="col-sm-2 col-form-label">@Html.DisplayNameFor(m => m.Description)</label>
+                    <div class="col-sm-10">
+                        <input asp-for="Description" class="form-control" placeholder="@Html.DisplayNameFor(m => m.Description)" />
+                        <span asp-validation-for="Description" class="form-text text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                        <input type="button" class="btn btn-success" value="Kaydet" onclick="SaveCategory(this)" />
+@*                         <input type="hidden" id="AjaxUrl" name="AjaxUrl" value="@Url.ActionLink("")" /> *@
+                        <div id="loading"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

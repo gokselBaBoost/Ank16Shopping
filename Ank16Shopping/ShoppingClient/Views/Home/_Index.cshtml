@@ -1,0 +1,50 @@
+﻿@model List<CategoryViewModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+@if (ViewBag.RecordStatus is not null && ViewBag.RecordStatus == true)
+{
+    <div class="bg-success">@ViewData["RecordMessage"]</div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Adı</th>
+            <th scope="col">Açıklama</th>
+            <th scope="col">Ekleyen</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(CategoryViewModel item in Model)
+        {
+            <tr>
+                <th scope="row">@item.Id</th>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@item.AppUserId</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<button class="btn btn-success" onclick="GetCategories()">GET Categories</button>
+<button class="btn btn-primary" onclick="PostCategories()">POST Categories</button>
+<button class="btn btn-info" onclick="PutCategories()">PUT Categories</button>
+<button class="btn btn-danger" onclick="DeleteCategories()">DELETE Categories</button>
+
+<hr />
+
+@await Html.PartialAsync("_Create", new CategoryViewModel())
+
+@section Scripts{
+    <script type="text/javascript" src="~/js/index.js"></script>
+}

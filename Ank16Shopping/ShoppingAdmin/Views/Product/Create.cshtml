@@ -1,0 +1,79 @@
+﻿@model ProductViewModel
+<div class="row">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                <h1>Kategori Ekle</h1>
+            </div>
+            <div class="card-body">
+                <form asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="All"></div>
+                    <div class="row mb-3">
+                        <label asp-for="Name" class="col-sm-2 col-form-label">@Html.DisplayNameFor(m => m.Name)</label>
+                        <div class="col-sm-10">
+                            <input asp-for="Name" class="form-control" placeholder="@Html.DisplayNameFor(m => m.Name)" />
+                            <span asp-validation-for="Name" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label asp-for="Description" class="col-sm-2 col-form-label">@Html.DisplayNameFor(m => m.Description)</label>
+                        <div class="col-sm-10">
+                            <input asp-for="Description" class="form-control" placeholder="@Html.DisplayNameFor(m => m.Description)" />
+                            <span asp-validation-for="Description" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label asp-for="Price" class="col-sm-2 col-form-label">@Html.DisplayNameFor(m => m.Price)</label>
+                        <div class="col-sm-10">
+                            <input asp-for="Price" class="form-control" placeholder="@Html.DisplayNameFor(m => m.Price)" />
+                            <span asp-validation-for="Price" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label asp-for="Stock" class="col-sm-2 col-form-label">@Html.DisplayNameFor(m => m.Stock)</label>
+                        <div class="col-sm-10">
+                            <input asp-for="Stock" class="form-control" placeholder="@Html.DisplayNameFor(m => m.Stock)" />
+                            <span asp-validation-for="Stock" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label asp-for="IsActive" class="col-sm-2 col-form-label">@Html.DisplayNameFor(m => m.IsActive)</label>
+                        <div class="col-sm-10">
+                            <input asp-for="IsActive" class="form-control form-check" placeholder="@Html.DisplayNameFor(m => m.IsActive)" />
+                            <span asp-validation-for="IsActive" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label asp-for="CategoryId" class="col-sm-2 col-form-label">@Html.DisplayNameFor(m => m.CategoryId)</label>
+                        <div class="col-sm-10">
+                            <select asp-for="CategoryId" class="form-control" asp-items="@ViewBag.CategoryList">
+
+                            </select>
+                            <span asp-validation-for="CategoryId" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label asp-for="FormFile" class="col-sm-2 col-form-label">@Html.DisplayNameFor(m => m.FormFile)</label>
+                        <div class="col-sm-10">
+                            <input asp-for="FormFile" class="form-control form-check" placeholder="@Html.DisplayNameFor(m => m.FormFile)" />
+                            <span asp-validation-for="FormFile" class="form-text text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-10">
+                            <input type="submit" class="btn btn-success" value="Kaydet" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

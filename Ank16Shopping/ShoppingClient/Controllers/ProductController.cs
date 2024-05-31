@@ -1,0 +1,16 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace ShoppingClient.Controllers
+{
+    [Authorize]
+    public class ProductController : Controller
+    {
+        public IActionResult Index()
+        {
+            var user = HttpContext.User;
+
+            return View();
+        }
+    }
+}

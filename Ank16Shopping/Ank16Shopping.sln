@@ -3,23 +3,27 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingClient", "ShoppingClient\ShoppingClient.csproj", "{B1C798BB-C424-49B4-864C-3A96A686EF9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingClient", "ShoppingClient\ShoppingClient.csproj", "{B1C798BB-C424-49B4-864C-3A96A686EF9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppingAdmin", "ShoppingAdmin\ShoppingAdmin.csproj", "{FC06EAB0-105A-4A13-8CDF-F07828D84B1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingAdmin", "ShoppingAdmin\ShoppingAdmin.csproj", "{FC06EAB0-105A-4A13-8CDF-F07828D84B1B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NTier", "NTier", "{6684D2EE-B85E-45D1-B53B-80A4C8C62A5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopping.DAL", "NTier\Shopping.DAL\Shopping.DAL.csproj", "{D0202040-D242-4C8D-9C52-D418546564F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.DAL", "NTier\Shopping.DAL\Shopping.DAL.csproj", "{D0202040-D242-4C8D-9C52-D418546564F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopping.BLL", "NTier\Shopping.BLL\Shopping.BLL.csproj", "{BE1DC087-7568-4C67-B929-8596280C6181}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.BLL", "NTier\Shopping.BLL\Shopping.BLL.csproj", "{BE1DC087-7568-4C67-B929-8596280C6181}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopping.Entities", "NTier\Shopping.Entities\Shopping.Entities.csproj", "{E702332E-060B-489E-9E7F-226BA14027C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Entities", "NTier\Shopping.Entities\Shopping.Entities.csproj", "{E702332E-060B-489E-9E7F-226BA14027C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopping.DTO", "NTier\Shopping.DTO\Shopping.DTO.csproj", "{9A204DC5-C5EF-49BB-B21B-A3C67753137D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.DTO", "NTier\Shopping.DTO\Shopping.DTO.csproj", "{9A204DC5-C5EF-49BB-B21B-A3C67753137D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopping.ViewModel", "NTier\Shopping.ViewModel\Shopping.ViewModel.csproj", "{57FE730A-8236-4737-975D-BF1D314DF3C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.ViewModel", "NTier\Shopping.ViewModel\Shopping.ViewModel.csproj", "{57FE730A-8236-4737-975D-BF1D314DF3C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopping.Common", "NTier\Shopping.Common\Shopping.Common.csproj", "{15D3B665-F18E-4F04-8BE8-3106081598E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Common", "NTier\Shopping.Common\Shopping.Common.csproj", "{15D3B665-F18E-4F04-8BE8-3106081598E4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoppingApi", "ShoppingApi\ShoppingApi.csproj", "{01A9F858-58AE-4119-80D2-EE729536E6DA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopping.Services", "NTier\Shopping.Services\Shopping.Services.csproj", "{199F94E0-A568-4258-A8F3-04126F66E49C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +63,14 @@ Global
 		{15D3B665-F18E-4F04-8BE8-3106081598E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15D3B665-F18E-4F04-8BE8-3106081598E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15D3B665-F18E-4F04-8BE8-3106081598E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01A9F858-58AE-4119-80D2-EE729536E6DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01A9F858-58AE-4119-80D2-EE729536E6DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01A9F858-58AE-4119-80D2-EE729536E6DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01A9F858-58AE-4119-80D2-EE729536E6DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{199F94E0-A568-4258-A8F3-04126F66E49C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{199F94E0-A568-4258-A8F3-04126F66E49C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{199F94E0-A568-4258-A8F3-04126F66E49C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{199F94E0-A568-4258-A8F3-04126F66E49C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +82,7 @@ Global
 		{9A204DC5-C5EF-49BB-B21B-A3C67753137D} = {6684D2EE-B85E-45D1-B53B-80A4C8C62A5F}
 		{57FE730A-8236-4737-975D-BF1D314DF3C1} = {6684D2EE-B85E-45D1-B53B-80A4C8C62A5F}
 		{15D3B665-F18E-4F04-8BE8-3106081598E4} = {6684D2EE-B85E-45D1-B53B-80A4C8C62A5F}
+		{199F94E0-A568-4258-A8F3-04126F66E49C} = {6684D2EE-B85E-45D1-B53B-80A4C8C62A5F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13CC9918-395F-4B1B-A342-9F7BE6DF4DC7}

@@ -52,6 +52,13 @@ namespace ShoppingAdmin.Controllers
                 return View(model);
             }
 
+            if(user.UserType != Shopping.Common.UserType.Manager)
+            {
+                ModelState.AddModelError("UserNotFound", "Kullanıcı adı veya şifre yanlıştır :)");
+
+                return View(model);
+            }
+
             Microsoft.AspNetCore.Identity.SignInResult signInResult = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, true);
 
             if(signInResult.IsLockedOut)

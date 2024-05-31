@@ -239,6 +239,9 @@ namespace Shopping.DAL.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<int>("UserType")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedEmail")
@@ -257,7 +260,7 @@ namespace Shopping.DAL.Migrations
                             Id = 1,
                             AccessFailedCount = 0,
                             BirthDate = new DateOnly(2000, 1, 1),
-                            ConcurrencyStamp = "489d5be5-20d6-42e8-85bd-25f8897f6e9b",
+                            ConcurrencyStamp = "517e9448-c985-4a5c-a551-9efd016f094b",
                             Email = "admin@mail.com",
                             EmailConfirmed = true,
                             Gender = 0,
@@ -265,13 +268,14 @@ namespace Shopping.DAL.Migrations
                             Name = "AdminName",
                             NormalizedEmail = "ADMIN@MAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAnYYc5cgn1mXwNhvlLvRgUuy2/FuKGKN6PBjk2JpFrjL1y7/KeDxUw1nynTcxcjFg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOAi/q3NnHLu7YUMhcUqlqoeq/BTAcCMbgcTAzsZNF03Ja64B7x2WTo3whAZCmcuKg==",
                             PhoneNumber = "-",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "2d673475-382b-4aeb-94a3-dc0b09ad461e",
+                            SecurityStamp = "65b9a189-8681-4192-9ed3-abd5fc5d4648",
                             Surname = "AdminSurname",
                             TwoFactorEnabled = false,
-                            UserName = "admin"
+                            UserName = "admin",
+                            UserType = 2
                         });
                 });
 
@@ -305,6 +309,60 @@ namespace Shopping.DAL.Migrations
                     b.HasIndex("AppUserId");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Shopping.Entities.Concrete.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AppUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("PictureFile")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("PictureName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<short>("Stock")
+                        .HasColumnType("smallint");
+
+                    b.Property<DateTime?>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -367,6 +425,30 @@ namespace Shopping.DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("AppUser");
+                });
+
+            modelBuilder.Entity("Shopping.Entities.Concrete.Product", b =>
+                {
+                    b.HasOne("Shopping.Entities.Concrete.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Shopping.Entities.Concrete.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Shopping.Entities.Concrete.Category", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }
