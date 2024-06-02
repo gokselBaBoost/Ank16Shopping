@@ -1,0 +1,127 @@
+﻿@{
+    Layout = "_LayoutBox";
+    ViewBag.BoxTitle = "Yönetim";
+}
+<div class="row">
+    <div class="col">
+        <div class="card card-primary card-tabs">
+            <div class="card-header p-0 pt-1">
+                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="custom-tabs-users-tab" data-toggle="pill" href="#custom-tabs-users" role="tab" aria-controls="custom-tabs-users" aria-selected="true">Kullanıcılar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="custom-tabs-roles-tab" data-toggle="pill" href="#custom-tabs-roles" role="tab" aria-controls="custom-tabs-roles" aria-selected="false">Roller</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="card-body">
+                <div class="tab-content" id="custom-tabs-tabContent">
+                    <div class="tab-pane fade show active" id="custom-tabs-users" role="tabpanel" aria-labelledby="custom-tabs-users-tab">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <a asp-controller="Management" asp-action="CreateUser" class="btn btn-success">
+                                            Yeni Kullanıcı
+                                        </a>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body table-responsive p-0">
+                                        <table class="table table-hover text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Adı Soyadı</th>
+                                                    <th>Doğum Tarihi</th>
+                                                    <th>E-Posta Adresi</th>
+                                                    <th>Kullanıcı Tipi</th>
+                                                    <th>İşlemler</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach(AppUser item in ViewBag.Users)
+                                                {
+                                                    <tr>
+                                                        <td>@item.Id</td>
+                                                        <td>@item.Name @item.Surname</td>
+                                                        <td>@item.BirthDate</td>
+                                                        <td>@item.Email</td>
+                                                        <td><span class="badge bg-primary">@item.UserType</span></td>
+                                                        <td>
+                                                            <a asp-controller="Management" asp-action="Edit" asp-route-id="@item.Id" asp-route-type="User" class="btn btn-success">
+                                                                Düzenle
+                                                            </a>
+                                                            <a asp-controller="Management" asp-action="Detail" asp-route-id="@item.Id" asp-route-type="User" class="btn btn-info">
+                                                                Detay
+                                                            </a>
+                                                            <a asp-controller="Management" asp-action="Delete" asp-route-id="@item.Id" asp-route-type="User" class="btn btn-danger">
+                                                                Sil
+                                                            </a>
+                                                        </td>
+                                                    </tr>                                                
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <div class="tab-pane fade" id="custom-tabs-roles" role="tabpanel" aria-labelledby="custom-tabs-roles-tab">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <a asp-controller="Management" asp-action="CreateRole" class="btn btn-success">
+                                            Yeni Role
+                                        </a>
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body table-responsive p-0">
+                                        <table class="table table-hover text-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Adı Soyadı</th>
+                                                    <th>İşlemler</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (IdentityRole<int> item in ViewBag.Roles)
+                                                {
+                                                    <tr>
+                                                        <td>@item.Id</td>
+                                                        <td>@item.Name</td>
+                                                        <td>
+                                                            <a asp-controller="Management" asp-action="Edit" asp-route-id="@item.Id" asp-route-type="Role" class="btn btn-success">
+                                                                Düzenle
+                                                            </a>
+                                                            <a asp-controller="Management" asp-action="Detail" asp-route-id="@item.Id" asp-route-type="Role" class="btn btn-info">
+                                                                Detay
+                                                            </a>
+                                                            <a asp-controller="Management" asp-action="Delete" asp-route-id="@item.Id" asp-route-type="Role" class="btn btn-danger">
+                                                                Sil
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                                <!-- /.card -->
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                </div>
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+</div>

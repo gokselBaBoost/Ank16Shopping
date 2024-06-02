@@ -21,13 +21,12 @@ namespace ShoppingAdmin.Controllers
 
         public IActionResult Index()
         {
-            var User = HttpContext.User;
-
             IEnumerable<ProductViewModel> list = _productManager.GetAll();
 
             return View(list);
         }
-        // GET: CategoryController/Create
+
+        // GET: ProductController/Create
         public ActionResult Create()
         {
             ProductViewModel model = new ProductViewModel();
@@ -46,7 +45,7 @@ namespace ShoppingAdmin.Controllers
             return View(model);
         }
 
-        // POST: CategoryController/Create
+        // POST: ProductController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(ProductViewModel model)
@@ -100,5 +99,76 @@ namespace ShoppingAdmin.Controllers
                 return View();
             }
         }
+
+        // GET: ProductController/Edit/5
+        public ActionResult Edit(int id)
+        {
+            CategoryViewModel model = _categoryManager.Get(id);
+
+            return View(model);
+        }
+
+        // POST: ProductController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(ProductViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                model.AppUserId = 1;//Login olan User Id  => AspNetUser da ki ID  Identity Login Kısımını yapılması gerekiyor
+
+                if (_productManager.Update(model) > 0)
+                    return RedirectToAction(nameof(Index));
+                else
+                {
+                    ModelState.AddModelError("DbError", "Veritabanı ekleme hatası");
+
+                    return View(model);
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("GeneralException", ex.Message);
+                ModelState.AddModelError("GeneralInnerException", ex.InnerException?.Message);
+                return View();
+            }
+        }
+
+        // GET: ProductController/Delete/5
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                _productManager.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                //Error Page redirect
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // POST: ProductController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, IFormCollection collection)
+        {
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
     }
 }

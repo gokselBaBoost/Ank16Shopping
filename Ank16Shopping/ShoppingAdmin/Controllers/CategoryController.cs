@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Shopping.BLL.Managers.Concrete;
 using Shopping.ViewModel.Category;
+using ShoppingAdmin.Filters;
 using System.Security.Claims;
 
 namespace ShoppingAdmin.Controllers
@@ -20,6 +21,7 @@ namespace ShoppingAdmin.Controllers
 
 
         // GET: CategoryController
+        [BreadCrumbActionFilter(Title = "Kategoriler")]
         public ActionResult Index()
         {
             IEnumerable<CategoryViewModel> list = _categoryManager.GetAll();
@@ -28,6 +30,7 @@ namespace ShoppingAdmin.Controllers
         }
 
         // GET: CategoryController/Details/5
+        [BreadCrumbActionFilter(Title = "Kategoriler@Index|Detay")]
         public ActionResult Details(int id)
         {
             //CategoryDetailViewModel? model = _categoryManager.Get(id);
@@ -37,6 +40,7 @@ namespace ShoppingAdmin.Controllers
         }
 
         // GET: CategoryController/Create
+        [BreadCrumbActionFilter(Title = "Kategoriler@Index|Yeni Kategori")]
         public ActionResult Create()
         {
             CategoryViewModel model = new CategoryViewModel();
@@ -77,6 +81,7 @@ namespace ShoppingAdmin.Controllers
         }
 
         // GET: CategoryController/Edit/5
+        [BreadCrumbActionFilter(Title = "Kategoriler@Index|Kategori Düzenle")]
         public ActionResult Edit(int id)
         {
             CategoryViewModel model = _categoryManager.Get(id);

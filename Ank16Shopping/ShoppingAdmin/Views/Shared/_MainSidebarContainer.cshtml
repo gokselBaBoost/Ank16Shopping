@@ -42,28 +42,37 @@
                 </li>
                 <li class="nav-item">
                     <a asp-controller="Product" asp-action="Index" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-tags"></i>
                         <p>Ürünler</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a asp-controller="Customer" asp-action="Index" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-users"></i>
                         <p>Müşteriler</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a asp-controller="Order" asp-action="Index" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-shopping-cart"></i>
                         <p>Siparişler</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a asp-controller="Cargo" asp-action="Index" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                        <i class="nav-icon fas fa-truck"></i>
                         <p>Kargolar</p>
                     </a>
                 </li>
+                @if(Context.User.Claims.Where(c => c.Type == ClaimTypes.Role && c.Value.Contains("Admin")).Any())
+                {
+                    <li class="nav-item">
+                        <a asp-controller="Management" asp-action="Index" class="nav-link">
+                            <i class="nav-icon fas fa-cogs"></i>
+                            <p>Yönetim</p>
+                        </a>
+                    </li>
+                }
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

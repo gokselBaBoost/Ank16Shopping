@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<CategoryViewModel>
-
-<a class="btn btn-success" asp-controller="Category" asp-action="Create">Yeni</a>
+@{
+    Layout = "_LayoutBox";
+    ViewBag.BoxTitle = "Kategoriler";
+}
 
 <section class="content">
     <div class="container-fluid">
@@ -10,64 +12,67 @@
                 <!-- general form elements -->
                 <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Kategoriler</h3>
+                        <a class="btn btn-success" asp-controller="Category" asp-action="Create">Yeni</a>
                     </div>
                     <!-- /.card-header -->
-                    <!-- form start -->
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Adı</th>
-                                <th>Açıklaması</th>
-                                <th>İşlem</th>
-                            </tr>
-                        </thead>
-                        <tbody id="category-list">
-                            @foreach (CategoryViewModel item in Model)
-                            {
+                    <div class="card-body">
+                        <!-- form start -->
+                        <table class="table">
+                            <thead>
                                 <tr>
-                                    <td>@item.Name</td>
-                                    <td>@item.Description</td>
-                                    <td>
-                                        <a class="btn btn-info" asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id">Düzenle</a>
-                                        <a class="btn btn-secondary" asp-controller="Category" asp-action="Details" asp-route-id="@item.Id">Detay</a>
-                                        <a class="btn btn-danger"
-                                           id="remove-link-@item.Id"
-                                           data-url="@Url.ActionLink("Delete", "Category", new { id = item.Id })"
-                                           data-bs-toggle="modal"
-                                           data-bs-target="#removeConfirm-@item.Id">Sil</a>
+                                    <th>Adı</th>
+                                    <th>Açıklaması</th>
+                                    <th>İşlem</th>
+                                </tr>
+                            </thead>
+                            <tbody id="category-list">
+                                @foreach (CategoryViewModel item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.Name</td>
+                                        <td>@item.Description</td>
+                                        <td>
+                                            <a class="btn btn-info" asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id">Düzenle</a>
+                                            <a class="btn btn-secondary" asp-controller="Category" asp-action="Details" asp-route-id="@item.Id">Detay</a>
+                                            <a class="btn btn-danger"
+                                               id="remove-link-@item.Id"
+                                               data-url="@Url.ActionLink("Delete", "Category", new { id = item.Id })"
+                                               data-bs-toggle="modal"
+                                               data-bs-target="#removeConfirm-@item.Id">Sil</a>
 
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="removeConfirm-@item.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p><strong>@item.Name</strong> kategorisini silmek istediğinizden emin misiniz?</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Geri</button>
-                                                        <button type="button" class="btn btn-danger" onclick="DeleteItem(@item.Id)">Evet</button>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="removeConfirm-@item.Id" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p><strong>@item.Name</strong> kategorisini silmek istediğinizden emin misiniz?</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Geri</button>
+                                                            <button type="button" class="btn btn-danger" onclick="DeleteItem(@item.Id)">Evet</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                    </td>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Adı</th>
+                                    <th>Açıklaması</th>
+                                    <th>İşlem</th>
                                 </tr>
-                            }
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>Adı</th>
-                                <th>Açıklaması</th>
-                                <th>İşlem</th>
-                            </tr>
-                        </tfoot>
-                    </table>
+                            </tfoot>
+                        </table>
+                    </div>
+                    
                 </div>
                 <!-- /.card -->
 
