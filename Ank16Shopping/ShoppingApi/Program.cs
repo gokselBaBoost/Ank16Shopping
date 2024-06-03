@@ -1,17 +1,37 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Shopping.BLL.Managers.Concrete;
 using Shopping.DAL.DataContext;
 using Shopping.DAL.Repositories.Concrete;
 using Shopping.DAL.Services.Concrete;
 using Shopping.Entities.Concrete;
 using Shopping.Services.Mail;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt =>
+                {
+                    opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                    {
+                        ValidateAudience = true,
+                        ValidateIssuer = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+
+                        ValidAudience = builder.Configuration.GetSection("JwtToken:Audience").Value,
+                        ValidIssuer = builder.Configuration.GetSection("JwtToken:Issuer").Value,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JwtToken:SigningKey").Value))
+                    };
+                });
 
 builder.Services.AddDbContext<ShoppingDbContext>(opt =>
 {
@@ -95,6 +115,8 @@ app.UseStaticFiles();
 //});
 
 app.UseCors("MyPolicy");
+
+//app.UseAuthentication();
 
 app.UseAuthorization();
 

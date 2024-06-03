@@ -15,7 +15,8 @@ namespace ShoppingApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [AuthActionFilter]
+    //[AuthActionFilter]
+    [Authorize]
     public class ProductsController : ControllerBase
     {
         private UserManager<AppUser> _userManager;
@@ -33,9 +34,9 @@ namespace ShoppingApi.Controllers
 
         // GET: api/<ProductsController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            return Ok(_productManager.GetAll());
         }
 
         // GET api/<ProductsController>/5

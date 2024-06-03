@@ -10,5 +10,6 @@ namespace Shopping.ViewModel
     {
         public List<UserClaimViewModel> Claims { get; set; }
         public string BasicAuth { get; set; }
+        public string JwtToken { get; set; }
     }
 }
