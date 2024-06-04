@@ -77,14 +77,20 @@ namespace ShoppingApi.Controllers
 
                 string token = _userManager.GenerateEmailConfirmationTokenAsync(user).Result;
 
-                //token = HttpUtility.UrlEncode(token);
+                token = HttpUtility.UrlEncode(token);
 
-                string link = _configuration["Mail:ConfirmLink"];
+				//token = HttpUtility.UrlDecode(token);
+
+				//var resultToken = _userManager.ConfirmEmailAsync(user, token).Result;
+
+				string link = _configuration["Mail:ConfirmLink"];
                 link += "?userMail=" + user.Email;
                 link += "&token=" + token; // https://localhost:7021/Account/ConfirmEmail?userMail=goksel@mail.com&token=asdasd
 
 
                 string aTag = $"<a href=\"{link}\">tıklayınız.</a>";
+
+
 
                 _mailService.Send(user.Email, user.Name, "Register", $"Kaydınızı tamamlamak için lütfen {aTag}");
 
