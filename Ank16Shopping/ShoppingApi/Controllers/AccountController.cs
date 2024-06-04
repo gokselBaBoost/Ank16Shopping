@@ -9,6 +9,7 @@ using Shopping.ViewModel;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Web;
 
 namespace ShoppingApi.Controllers
 {
@@ -74,10 +75,25 @@ namespace ShoppingApi.Controllers
             {
                 //Mail gönderme
 
-                _mailService.Send(user.Email, user.Name, "Register", "Kayıt için tıklayınız link");
+                string token = _userManager.GenerateEmailConfirmationTokenAsync(user).Result;
+
+                //token = HttpUtility.UrlEncode(token);
+
+                string link = _configuration["Mail:ConfirmLink"];
+                link += "?userMail=" + user.Email;
+                link += "&token=" + token; // https://localhost:7021/Account/ConfirmEmail?userMail=goksel@mail.com&token=asdasd
+
+
+                string aTag = $"<a href=\"{link}\">tıklayınız.</a>";
+
+                _mailService.Send(user.Email, user.Name, "Register", $"Kaydınızı tamamlamak için lütfen {aTag}");
+
+                return Created("", model);
             }
 
-            return Ok();
+            // TODO register işleminde ki tüm hatalar yaklanmalı ve geri dönüş o şekilde yapılmalıdır. Örnek Email daha önce kullanılmıştır, Şifre uygun değildir.
+
+            return BadRequest("İşlem yapılamadı.");
         }
 
         [HttpPost("SignIn")]
@@ -124,6 +140,30 @@ namespace ShoppingApi.Controllers
             return NotFound("Kullanıcı adı veya şifre yanlıştır.");
         }
 
+        [HttpGet("ConfirmEmail")]
+        public IActionResult ConfirmEmail(string userMail, string token)
+        {
+            AppUser? user = _userManager.FindByEmailAsync(userMail).Result;
+
+            if (user == null)
+                return NotFound("Kullanıcı bulunamadı");
+
+            //token = HttpUtility.UrlDecode(token);
+
+            IdentityResult result = _userManager.ConfirmEmailAsync(user, token).Result;
+
+            if (result.Succeeded)
+                return Ok();
+
+            return BadRequest($"{userMail} adresi doğrulanamadı.");
+        }
+
+        [HttpGet("HealtyCheck")]
+        public IActionResult HealtyCheck()
+        {
+            return Ok();
+        }
+
 
         [HttpPost("SignInWithJwt")]
         public IActionResult SignInWithJwt(SignInViewModel model)
@@ -148,12 +188,13 @@ namespace ShoppingApi.Controllers
                     userClaimViewModel.Add(new() { Type = claim.Type, Value = claim.Value });
                 }
 
-                SignInResponseViewModel response = new SignInResponseViewModel();
-                response.Claims = userClaimViewModel;
-                response.BasicAuth = BasicAuthGenerate(model.Email, model.Password);
-                response.JwtToken = JwtGenerate(claims);
+                //SignInResponseViewModel response = new SignInResponseViewModel();
+                //response.Claims = userClaimViewModel;
+                //response.BasicAuth = BasicAuthGenerate(model.Email, model.Password);
+                //response.JwtToken = JwtGenerate(claims);
 
-                return Ok(response);
+                //return Ok(response);
+                return Ok(JwtGenerate(claims));
             }
 
             if (result.IsNotAllowed)

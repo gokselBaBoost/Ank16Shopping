@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Shopping.BLL.Managers.Concrete;
 using Shopping.DAL.DataContext;
@@ -16,22 +17,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(opt =>
-                {
-                    opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
-                    {
-                        ValidateAudience = true,
-                        ValidateIssuer = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-
-                        ValidAudience = builder.Configuration.GetSection("JwtToken:Audience").Value,
-                        ValidIssuer = builder.Configuration.GetSection("JwtToken:Issuer").Value,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JwtToken:SigningKey").Value))
-                    };
-                });
 
 builder.Services.AddDbContext<ShoppingDbContext>(opt =>
 {
@@ -52,9 +37,30 @@ builder.Services.AddIdentity<AppUser, IdentityRole<int>>(
         opt.Password.RequiredUniqueChars = 1;
         opt.Password.RequiredLength = 8;
     }
-                )
-                .AddDefaultTokenProviders()
-                .AddEntityFrameworkStores<ShoppingDbContext>();
+                ).AddDefaultTokenProviders().AddEntityFrameworkStores<ShoppingDbContext>();
+
+builder.Services.AddAuthentication(opt =>
+{
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+                .AddJwtBearer(opt =>
+                {
+                    opt.SaveToken = true;
+                    opt.RequireHttpsMetadata = false;
+                    opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                    {
+                        ValidateAudience = true,
+                        ValidateIssuer = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+
+                        ValidAudience = builder.Configuration.GetSection("JwtToken:Audience").Value,
+                        ValidIssuer = builder.Configuration.GetSection("JwtToken:Issuer").Value,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("JwtToken:SigningKey").Value))
+                    };
+                });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
