@@ -4,3 +4,15 @@
 @{
 }
 <p>Bu sayfayı görüyorsanız login olmuşsunuzdur.</p>
+
+@* buton -> click event i js ile yaklayıp bu isteği mevcut MVC projesi bypass ederek direk olarak API gitmek istersen AJAX ile yazarsın CORS 
+
+!!! MVC projesinin byPass edilmesi tercih edilmemelidir. Bu link kontrol için güvenlik MVC in bir controllerına gitmesi daha doğrudur oradan http client ile istek atmak 
+daha güvenlidir. HtttpClient için de header a token ı eklemek gizli olduğundan client ı kullanan kimse bu token ile API ye gittimi bilmemiş olacak
+
+API ler her zaman mvc si projesinin arkasında bulunan internal bir site olarak tasarlanır.
+
+www.bilgeadam.com => bu public bir site => api.bilgeadam.com 
+
+70.80.90.10 => sitenin istediği index.html =>
+            => api.bilgeadam.com => 10.0.2.10 *@
